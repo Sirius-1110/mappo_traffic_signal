@@ -1,0 +1,214 @@
+diff --git a/entry/sumo_config/sumo_arterial7_mappo_default_config.py b/entry/sumo_config/sumo_arterial7_mappo_default_config.py
+index 9388074..71debba 100644
+--- a/entry/sumo_config/sumo_arterial7_mappo_default_config.py
++++ b/entry/sumo_config/sumo_arterial7_mappo_default_config.py
+@@ -2,7 +2,7 @@ from easydict import EasyDict
+ from torch import nn
+ 
+ sumo_mappo_default_config = dict(
+-    exp_name='sumo_arterial7_mappo',
++    exp_name='sumo_arterial7_mappo_batch256',
+     env=dict(
+         manager=dict(
+             # Whether to use shared memory. Only effective if manager type is 'subprocess'
+@@ -15,7 +15,7 @@ sumo_mappo_default_config = dict(
+         n_evaluator_episode=1,
+         # Once evaluation reward reaches "stop_value", which means the policy converges, the training can end.
+         stop_value=0,
+-        collector_env_num=15,
++        collector_env_num=4,
+         evaluator_env_num=1,
+     ),
+     policy=dict(
+@@ -35,7 +35,7 @@ sumo_mappo_default_config = dict(
+         ),
+         learn=dict(
+             epoch_per_collect=10,
+-            batch_size=64,
++            batch_size=256,
+             learning_rate=1e-4,
+             value_weight=0.5,
+             entropy_weight=0.01,
+@@ -54,10 +54,10 @@ sumo_mappo_default_config = dict(
+             n_sample=600,
+             collector=dict(
+                 transform_obs=True,
+-                collect_print_freq=1000,
++                collect_print_freq=10,
+             )
+         ),
+-        eval=dict(evaluator=dict(eval_freq=1000, )),
++        eval=dict(evaluator=dict(eval_freq=1e100, )),
+         other=dict()
+     ),
+ )
+diff --git a/entry/sumo_config/sumo_wj3_mappo_default_config.py b/entry/sumo_config/sumo_wj3_mappo_default_config.py
+index 7d4211b..07c14ef 100644
+--- a/entry/sumo_config/sumo_wj3_mappo_default_config.py
++++ b/entry/sumo_config/sumo_wj3_mappo_default_config.py
+@@ -2,7 +2,7 @@ from easydict import EasyDict
+ from torch import nn
+ 
+ sumo_mappo_default_config = dict(
+-    exp_name='sumo_wj3_mappo',
++    exp_name=f'sumo_wj3_mappo_1500step_256batch_clip',
+     env=dict(
+         manager=dict(
+             # Whether to use shared memory. Only effective if manager type is 'subprocess'
+@@ -15,7 +15,7 @@ sumo_mappo_default_config = dict(
+         n_evaluator_episode=1,
+         # Once evaluation reward reaches "stop_value", which means the policy converges, the training can end.
+         stop_value=0,
+-        collector_env_num=15,
++        collector_env_num=4,
+         evaluator_env_num=1,
+     ),
+     policy=dict(
+@@ -35,7 +35,7 @@ sumo_mappo_default_config = dict(
+         ),
+         learn=dict(
+             epoch_per_collect=10,
+-            batch_size=64,
++            batch_size=256,
+             learning_rate=1e-4,
+             value_weight=0.5,
+             entropy_weight=0.01,
+@@ -46,6 +46,12 @@ sumo_mappo_default_config = dict(
+                     log_show_after_iter=1000,
+                 ),
+             ),
++            # (bool) Whether to use advantage norm in a whole training batch
++            # adv_norm=False,
++            value_norm=True,
++            #ppo_param_init=True,
++            #grad_clip_type='clip_norm',
++            #grad_clip_value=5
+         ),
+         collect=dict(
+             unroll_len=1,
+@@ -54,10 +60,10 @@ sumo_mappo_default_config = dict(
+             n_sample=600,
+             collector=dict(
+                 transform_obs=True,
+-                collect_print_freq=1000,
++                collect_print_freq=10,
+             )
+         ),
+-        eval=dict(evaluator=dict(eval_freq=1000, )),
++        eval=dict(evaluator=dict(eval_freq=1e100, )),
+         other=dict()
+     ),
+ )
+diff --git a/setup.py b/setup.py
+index b816b1d..f2cda6e 100644
+--- a/setup.py
++++ b/setup.py
+@@ -44,9 +44,9 @@ setup(
+         'entry/cityflow_eval',
+     ],
+     install_requires=[
+-        "di-engine>=0.3",
+-        "gym<=0.25.1",
+-        "torch>=1.4,<=1.8",
++        #"di-engine>=0.3",
++        #"gym<=0.25.1",
++        #"torch>=1.4,<=1.8",
+         "sumolib",
+         "traci",
+         "MarkupSafe<=2.0.1'",
+diff --git a/smartcross/envs/__init__.py b/smartcross/envs/__init__.py
+index bdff0f9..d4f6fc6 100644
+--- a/smartcross/envs/__init__.py
++++ b/smartcross/envs/__init__.py
+@@ -2,5 +2,5 @@ import smartcross
+ 
+ if 'sumo' in smartcross.SIMULATORS:
+     from .sumo_env import SumoEnv
+-if 'cityflow' in smartcross.SIMULATORS:
+-    from .cityflow_env import CityflowEnv
++#if 'cityflow' in smartcross.SIMULATORS:
++#    from .cityflow_env import CityflowEnv
+diff --git a/smartcross/envs/sumo_arterial7_multi_agent_config.yaml b/smartcross/envs/sumo_arterial7_multi_agent_config.yaml
+index 4a49cf1..c96fc0c 100644
+--- a/smartcross/envs/sumo_arterial7_multi_agent_config.yaml
++++ b/smartcross/envs/sumo_arterial7_multi_agent_config.yaml
+@@ -2,7 +2,7 @@ env:
+   sumocfg_path: 'sumo_arterial_7roads/standard.sumocfg'
+   gui: False
+   inference: False
+-  dynamic_flow: True
++  dynamic_flow: False
+   flow_range: [900, 1900, 100]
+   max_episode_steps: 1600
+   green_duration: 10
+@@ -19,4 +19,4 @@ env:
+   reward:
+     use_centralized_reward: True
+     reward_type: 
+-      pressure: 0.1
+\ No newline at end of file
++      queue_len: 1.0
+\ No newline at end of file
+diff --git a/smartcross/envs/sumo_env.py b/smartcross/envs/sumo_env.py
+index edc2755..aec3183 100644
+--- a/smartcross/envs/sumo_env.py
++++ b/smartcross/envs/sumo_env.py
+@@ -104,6 +104,12 @@ class SumoEnv(BaseEnv):
+         print("reset sumocfg file to ", route_flow)
+ 
+     def reset(self) -> Any:
++        # Add metric
++        self._total_queue_len = 0
++        self._total_wait_time = 0
++        self._total_delay_time = 0
++        self._total_pressure = 0
++        
+         self._current_steps = 0
+         self._total_reward = 0
+         self._last_action = None
+@@ -132,14 +138,23 @@ class SumoEnv(BaseEnv):
+         reward = self._reward_runner.get()
+         self._total_reward += reward
+         done = self._current_steps > self._max_episode_steps
++        self._update_metric()
+         info = {}
+         if done:
+             info['final_eval_reward'] = self._total_reward
++            info['queue_len'] = self._total_queue_len / self._current_steps
++            info['wait_time'] = self._total_wait_time / self._current_steps
++            info['delay_time'] = self._total_delay_time / self._current_steps
++            info['pressure'] = self._total_pressure / self._current_steps
++            # Add metric
+             self.close()
+         reward = to_ndarray([reward], dtype=np.float32)
++        
+         return BaseEnvTimestep(obs, reward, done, info)
+ 
+     def seed(self, seed: int, dynamic_seed: bool = True) -> None:
++        seed = 0
++        dynamic_seed = 0
+         self._seed = seed
+         self._dynamic_seed = dynamic_seed
+         np.random.seed(self._seed)
+@@ -152,6 +167,21 @@ class SumoEnv(BaseEnv):
+             self._launch_env_flag = False
+             traci.close()
+ 
++    def _update_metric(self):
++        queue_len, wait_time, delay_time, pressure = 0, 0, 0, 0
++        for cross in self._crosses.values():
++            queue_len += np.average(list(cross.get_lane_queue_len().values()))
++            wait_time += np.average(list(cross.get_lane_wait_time().values()))
++            delay_time += np.average(list(cross.get_lane_delay_time().values()))
++            pressure += cross.get_pressure()
++        
++        self._total_queue_len += queue_len
++        self._total_wait_time += wait_time
++        self._total_delay_time += delay_time
++        self._total_pressure += pressure
++        
++        return queue_len, wait_time, delay_time, pressure
++    
+     # def info(self) -> 'BaseEnvInfo':
+     #     info_data = {
+     #         'agent_num': len(self._tls),

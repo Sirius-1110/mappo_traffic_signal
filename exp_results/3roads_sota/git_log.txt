@@ -1,0 +1,237 @@
+b298a28
+
+commit b298a287fe6cb30bd2b4fd252c422594deb35c0c
+Author: roy544546495 <544546495@qq.com>
+Date:   Fri Dec 27 11:50:26 2024 +0800
+
+    治理无效内容
+
+ .../entry/mappo_3roads_base/ckpt/ckpt_best.pth.tar |    Bin 2689349 -> 0 bytes
+ .../mappo_3roads_base/formatted_total_config.py    |    162 -
+ .../entry/mappo_3roads_base/git_diff.txt           | 668037 +++++++++++++++---
+ signal_control/entry/mappo_3roads_base/git_log.txt |    122 +-
+ .../log/collector/collector_logger.txt             |      0
+ .../log/evaluator/evaluator_logger.txt             |     29 -
+ .../log/learner/learner_logger.txt                 |     89 -
+ ...1735271118.autodl-container-5b4042a86d-e11e6139 |      0
+ .../entry/mappo_3roads_base/total_config.py        |    169 -
+ .../entry/mappo_3roads_sota/ckpt/ckpt_best.pth.tar |    Bin 2697541 -> 0 bytes
+ .../mappo_3roads_sota/formatted_total_config.py    |    161 -
+ .../entry/mappo_3roads_sota/git_diff.txt           |  81653 ---
+ signal_control/entry/mappo_3roads_sota/git_log.txt |   1743 -
+ .../log/collector/collector_logger.txt             |      0
+ .../log/evaluator/evaluator_logger.txt             |     29 -
+ .../log/learner/learner_logger.txt                 |     89 -
+ ...1735270309.autodl-container-5b4042a86d-e11e6139 |      0
+ .../entry/mappo_3roads_sota/total_config.py        |    168 -
+ .../formatted_total_config.py                      |    161 -
+ .../mappo_3roads_sota_241227_113606/git_diff.txt   |  81666 ---
+ .../mappo_3roads_sota_241227_113606/git_log.txt    |   1743 -
+ .../total_config.py                                |    168 -
+ .../formatted_total_config.py                      |    161 -
+ .../mappo_3roads_sota_241227_113642/git_diff.txt   |  81678 ---
+ .../mappo_3roads_sota_241227_113642/git_log.txt    |   1743 -
+ .../total_config.py                                |    168 -
+ .../formatted_total_config.py                      |    162 -
+ .../mappo_3roads_sota_241227_113712/git_diff.txt   |  81678 ---
+ .../mappo_3roads_sota_241227_113712/git_log.txt    |   1743 -
+ .../total_config.py                                |    169 -
+ .../ckpt/ckpt_best.pth.tar                         |    Bin 2697541 -> 0 bytes
+ .../ckpt/iteration_0.pth.tar                       |    Bin 8083653 -> 0 bytes
+ .../formatted_total_config.py                      |    162 -
+ .../mappo_3roads_sota_241227_113735/git_diff.txt   |  81678 ---
+ .../mappo_3roads_sota_241227_113735/git_log.txt    |   1743 -
+ .../log/collector/collector_logger.txt             |     22 -
+ .../log/evaluator/evaluator_logger.txt             |     29 -
+ .../log/learner/learner_logger.txt                 |    108 -
+ ...1735270667.autodl-container-5b4042a86d-e11e6139 |    Bin 3263 -> 0 bytes
+ .../total_config.py                                |    169 -
+ .../ckpt/ckpt_best.pth.tar                         |    Bin 2697541 -> 0 bytes
+ .../ckpt/iteration_0.pth.tar                       |    Bin 8083653 -> 0 bytes
+ .../formatted_total_config.py                      |    162 -
+ .../mappo_3roads_sota_241227_114248/git_diff.txt   |  81678 ---
+ .../mappo_3roads_sota_241227_114248/git_log.txt    |   1743 -
+ .../log/collector/collector_logger.txt             |      0
+ .../log/evaluator/evaluator_logger.txt             |     29 -
+ .../log/learner/learner_logger.txt                 |    108 -
+ ...1735270979.autodl-container-5b4042a86d-e11e6139 |      0
+ .../total_config.py                                |    169 -
+ 50 files changed, 586808 insertions(+), 584683 deletions(-)
+
+commit 5a98579c6393e71b43bb6bdb5ae5635b6f1dff59
+Author: roy544546495 <544546495@qq.com>
+Date:   Fri Dec 27 11:48:39 2024 +0800
+
+    用户版 交通信号控制
+
+ framework/ding/model/template/__init__.py          |     1 +
+ framework/ding/model/template/mavac.py             |     7 +-
+ framework/ding/model/template/mavac_sota.py        |   495 +
+ framework/ding/policy/ppo.py                       |     2 +
+ .../entry/mappo_3roads_base/ckpt/ckpt_best.pth.tar |   Bin 0 -> 2689349 bytes
+ .../mappo_3roads_base/formatted_total_config.py    |   162 +
+ .../entry/mappo_3roads_base/git_diff.txt           | 81678 +++++++++++++++++++
+ signal_control/entry/mappo_3roads_base/git_log.txt |  1743 +
+ .../log/collector/collector_logger.txt             |     0
+ .../log/evaluator/evaluator_logger.txt             |    29 +
+ .../log/learner/learner_logger.txt                 |    89 +
+ ...1735271118.autodl-container-5b4042a86d-e11e6139 |     0
+ .../entry/mappo_3roads_base/total_config.py        |   169 +
+ .../entry/mappo_3roads_sota/ckpt/ckpt_best.pth.tar |   Bin 0 -> 2697541 bytes
+ .../mappo_3roads_sota/formatted_total_config.py    |   161 +
+ .../entry/mappo_3roads_sota/git_diff.txt           | 81653 ++++++++++++++++++
+ signal_control/entry/mappo_3roads_sota/git_log.txt |  1743 +
+ .../log/collector/collector_logger.txt             |     0
+ .../log/evaluator/evaluator_logger.txt             |    29 +
+ .../log/learner/learner_logger.txt                 |    89 +
+ ...1735270309.autodl-container-5b4042a86d-e11e6139 |     0
+ .../entry/mappo_3roads_sota/total_config.py        |   168 +
+ .../formatted_total_config.py                      |   161 +
+ .../mappo_3roads_sota_241227_113606/git_diff.txt   | 81666 ++++++++++++++++++
+ .../mappo_3roads_sota_241227_113606/git_log.txt    |  1743 +
+ .../total_config.py                                |   168 +
+ .../formatted_total_config.py                      |   161 +
+ .../mappo_3roads_sota_241227_113642/git_diff.txt   | 81678 +++++++++++++++++++
+ .../mappo_3roads_sota_241227_113642/git_log.txt    |  1743 +
+ .../total_config.py                                |   168 +
+ .../formatted_total_config.py                      |   162 +
+ .../mappo_3roads_sota_241227_113712/git_diff.txt   | 81678 +++++++++++++++++++
+ .../mappo_3roads_sota_241227_113712/git_log.txt    |  1743 +
+ .../total_config.py                                |   169 +
+ .../ckpt/ckpt_best.pth.tar                         |   Bin 0 -> 2697541 bytes
+ .../ckpt/iteration_0.pth.tar                       |   Bin 0 -> 8083653 bytes
+ .../formatted_total_config.py                      |   162 +
+ .../mappo_3roads_sota_241227_113735/git_diff.txt   | 81678 +++++++++++++++++++
+ .../mappo_3roads_sota_241227_113735/git_log.txt    |  1743 +
+ .../log/collector/collector_logger.txt             |    22 +
+ .../log/evaluator/evaluator_logger.txt             |    29 +
+ .../log/learner/learner_logger.txt                 |   108 +
+ ...1735270667.autodl-container-5b4042a86d-e11e6139 |   Bin 0 -> 3263 bytes
+ .../total_config.py                                |   169 +
+ .../ckpt/ckpt_best.pth.tar                         |   Bin 0 -> 2697541 bytes
+ .../ckpt/iteration_0.pth.tar                       |   Bin 0 -> 8083653 bytes
+ .../formatted_total_config.py                      |   162 +
+ .../mappo_3roads_sota_241227_114248/git_diff.txt   | 81678 +++++++++++++++++++
+ .../mappo_3roads_sota_241227_114248/git_log.txt    |  1743 +
+ .../log/collector/collector_logger.txt             |     0
+ .../log/evaluator/evaluator_logger.txt             |    29 +
+ .../log/learner/learner_logger.txt                 |   108 +
+ ...1735270979.autodl-container-5b4042a86d-e11e6139 |     0
+ .../total_config.py                                |   169 +
+ ...ult_config.py => sumo_3roads_mappo_baseline.py} |    54 +-
+ ...default_config.py => sumo_3roads_mappo_sota.py} |     3 +-
+ ...ult_config.py => sumo_7roads_mappo_baseline.py} |    30 +-
+ ...default_config.py => sumo_7roads_mappo_sota.py} |     3 +-
+ .../sumo_arterial7_dqn_default_config.py           |   114 -
+ .../sumo_arterial7_offppo_default_config.py        |    96 -
+ .../sumo_arterial7_ppo_default_config.py           |    87 -
+ .../sumo_config/sumo_wj3_dqn_default_config.py     |   116 -
+ .../sumo_config/sumo_wj3_rainbow_default_config.py |   116 -
+ .../formatted_total_config.py                      |   161 +
+ .../git_diff.txt                                   | 81399 ++++++++++++++++++
+ .../git_log.txt                                    |  1743 +
+ .../total_config.py                                |   168 +
+ .../formatted_total_config.py                      |   161 +
+ .../git_diff.txt                                   | 81620 ++++++++++++++++++
+ .../git_log.txt                                    |  1743 +
+ .../total_config.py                                |   168 +
+ .../ckpt/ckpt_best.pth.tar                         |   Bin 0 -> 2697541 bytes
+ .../ckpt/iteration_0.pth.tar                       |   Bin 0 -> 8083653 bytes
+ .../formatted_total_config.py                      |   161 +
+ .../git_diff.txt                                   | 81632 ++++++++++++++++++
+ .../git_log.txt                                    |  1743 +
+ .../log/collector/collector_logger.txt             |     0
+ .../log/evaluator/evaluator_logger.txt             |    29 +
+ .../log/learner/learner_logger.txt                 |   108 +
+ ...1735269924.autodl-container-5b4042a86d-e11e6139 |     0
+ .../total_config.py                                |   168 +
+ .../detector/detector1_lane_end.add.xml            |     0
+ .../detector/detector1_lane_start.add.xml          |     0
+ .../detector/detector2_length_49_freq_60.add.xml   |     0
+ .../detector/detector2_length_7_freq_1.add.xml     |     0
+ .../detector/detector3.add.xml                     |     0
+ .../{sumo_wj3 => sumo_3roads}/edge_measure.add.xml |     0
+ .../envs/{sumo_wj3 => sumo_3roads}/rl_wj.ini       |     0
+ .../envs/{sumo_wj3 => sumo_3roads}/rl_wj.net.xml   |     0
+ .../envs/{sumo_wj3 => sumo_3roads}/rl_wj.sumocfg   |     0
+ .../envs/{sumo_wj3 => sumo_3roads}/summary.xml     |     0
+ .../{sumo_wj3 => sumo_3roads}/testflow.rou.xml     |     0
+ .../{sumo_wj3 => sumo_3roads}/testflow.trip.xml    |     0
+ .../testflow.turndefs.xml                          |     0
+ ...ig.yaml => sumo_3roads_multi_agent_config.yaml} |     2 +-
+ .../standard.net.xml                               |     0
+ .../standard.sumocfg                               |     0
+ ...ig.yaml => sumo_7roads_multi_agent_config.yaml} |     2 +-
+ .../envs/sumo_arterial7_default_config.yaml        |     2 +-
+ .../sumo_arterial_7roads/route/1100/2_eg.rou.xml   | 14490 ----
+ .../smartcross/envs/sumo_wj3_default_config.yaml   |     2 +-
+ 101 files changed, 838314 insertions(+), 15065 deletions(-)
+
+commit be321597da423d164b67165e078024ebe179baae
+Author: roy544546495 <544546495@qq.com>
+Date:   Fri Dec 27 11:12:18 2024 +0800
+
+    SUMO Smart Cross 轻量化环境
+
+ framework/CHANGELOG                     | 438 --------------------------------
+ framework/conda/conda_build_config.yaml |   2 -
+ framework/conda/meta.yaml               |  35 ---
+ framework/docker/Dockerfile.base        |  59 -----
+ framework/docker/Dockerfile.env         | 144 -----------
+ framework/docker/Dockerfile.hpc         |  77 ------
+ framework/docker/Dockerfile.rpc         |  23 --
+ 7 files changed, 778 deletions(-)
+
+commit 12ab1b2c36cbf0eb6c2b735b3dd90786d72fa2e0
+Author: roy544546495 <544546495@qq.com>
+Date:   Fri Dec 27 10:51:25 2024 +0800
+
+    版权授予 && 治理无效代码
+
+ README.md                                          |   1 -
+ signal_control/README.md                           | 177 ---------------------
+ signal_control/docs/.gitignore                     |   3 -
+ signal_control/docs/Makefile                       |  20 ---
+ signal_control/docs/figs/di-smartcross_banner.png  | Bin 51114 -> 0 bytes
+ signal_control/docs/figs/di-smartcross_logo.png    | Bin 259459 -> 0 bytes
+ signal_control/docs/figs/grid2x3.gif               | Bin 926047 -> 0 bytes
+ signal_control/docs/figs/qr.png                    | Bin 34387 -> 0 bytes
+ signal_control/docs/figs/rl_arterial.png           | Bin 123272 -> 0 bytes
+ signal_control/docs/figs/smartcross logo.jpg       | Bin 97723 -> 0 bytes
+ signal_control/docs/figs/wj3.png                   | Bin 1760073 -> 0 bytes
+ signal_control/docs/source/conf.py                 |  89 -----------
+ signal_control/docs/source/envs/cf_grid_env.rst    |  32 ----
+ .../docs/source/envs/rl_arterial7_env.rst          |  26 ---
+ signal_control/docs/source/envs/wj3_env.rst        |  26 ---
+ signal_control/docs/source/faq.rst                 |  15 --
+ signal_control/docs/source/index.rst               |  61 -------
+ signal_control/docs/source/installation.rst        | 134 ----------------
+ signal_control/docs/source/quick_start.rst         | 147 -----------------
+ signal_control/docs/source/rl_environments.rst     | 137 ----------------
+ .../cityflow_eval_default_config.py                |  36 -----
+ .../cityflow_grid_dqn_default_config.py            | 117 --------------
+ .../cityflow_grid_ppo_default_config.py            |  95 -----------
+ .../cityflow_config/cityflow_ppo_22_config.py      | 101 ------------
+ .../cityflow_ppo_22_different_encoder_config.py    | 101 ------------
+ .../cityflow_ppo_22_discrete_config.py             | 101 ------------
+ .../cityflow_ppo_22_separate_config.py             | 101 ------------
+ signal_control/entry/cityflow_eval                 |  68 --------
+ signal_control/entry/cityflow_train                | 141 ----------------
+ signal_control/setup.py                            |   4 +-
+ signal_control/smartcross/__init__.py              |   8 +-
+ 31 files changed, 5 insertions(+), 1736 deletions(-)
+
+commit 40dc137d61452dfb4a1eabc530fb19ea2b076afb
+Author: roy544546495 <544546495@qq.com>
+Date:   Fri Dec 27 10:47:09 2024 +0800
+
+    版权授予 && 治理无效代码
+
+ framework/CODE_OF_CONDUCT.md | 128 ------------
+ framework/CONTRIBUTING.md    |   7 -
+ framework/LICENSE            | 202 -------------------
+ framework/README.md          | 464 -------------------------------------------
+ framework/ding/__init__.py   |   8 +-
+ framework/install_log.txt    |  17 --
+ framework/setup.py           |   6 +-
+ 7 files changed, 6 insertions(+), 826 deletions(-)

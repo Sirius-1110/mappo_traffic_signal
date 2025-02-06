@@ -1,0 +1,34 @@
+# MAPPO-TSC
+@author: Sirius1110
+@latest update: Jan9th, 2025
+
+- 环境
+
+用Ubuntu，然后pytorch是1.10对这个也很关键，
+就基本上这三个如果能保证的话。
+这刚提到这些东西，你先保保持一致。
+然后再用这个 set up 把这个装了。
+
+
+
+- @mavac_sota.pyM xe mavac.py
+    - class MAVAcSota(nn.Module):
+    就是你做了中心直接网络结构的优化的东西，VAC Model
+
+
+    - class Selfaitention(nn.Module):
+    self attention cross attention 的东西写在这里
+
+
+- @ésumo_env.py
+    - class SumoEnv(BaseEnv):
+    def _get_cls(self, obs_n, k):   
+    因为这个东西你换成什么聚类方法都是可以的
+
+
+- @sumo_3roads_mappo baseline.py
+    - exp_name=f'mappo_3roads_base_test',
+    记得把这个叫实验名的参数记得每次都要改，不然会覆盖原来的参数
+
+
+# 置信区间图得跑多次

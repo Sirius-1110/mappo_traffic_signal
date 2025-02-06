@@ -1,20 +1,20 @@
-from typing import Union, Dict, Optional
-import torch
-import torch.nn as nn
-from ding.torch_utils.network.nn_module import fc_block
-from ding.utils import SequenceType, squeeze, MODEL_REGISTRY
+from typing import Union, Dict, Optional, List
+# import torch
+# import torch.nn as nn
+# from ding.torch_utils.network.nn_module import fc_block
+# from ding.utils import SequenceType, squeeze, MODEL_REGISTRY
 from ..common import ReparameterizationHead, RegressionHead, DiscreteHead, MultiHead, \
     FCEncoder, ConvEncoder
-import math 
+# import math 
 import itertools
-from torch_geometric.nn import GCNConv
-from typing import Union, List
+# from torch_geometric.nn import GCNConv
+# from typing import Union, List
 import torch
 import numpy as np
 import torch.nn as nn
 import torch.nn.functional as F
 from functools import reduce
-from ding.utils import list_split, squeeze, MODEL_REGISTRY
+from ding.utils import list_split, squeeze, MODEL_REGISTRY, SequenceType
 from ding.torch_utils.network.nn_module import fc_block, MLP
 from ding.torch_utils.network.transformer import ScaledDotProductAttention
 from ding.torch_utils import to_tensor, tensor_to_list
@@ -228,6 +228,12 @@ class MAVACSota(nn.Module):
                 if ``None`` then default set to ``nn.ReLU()``
             - norm_type (:obj:`Optional[str]`):
                 The type of normalization to use, see ``ding.torch_utils.fc_block`` for more details`
+        """
+        
+        """
+        squeeze 函数在这里的作用是移除观测和动作空间形状中的单维度条目，
+        确保它们是简洁的整数或最小维度的元组/列表。
+        有助于简化后续的模型构建和计算逻辑，避免不必要的复杂性。
         """
         super(MAVACSota, self).__init__()
         self.sota = True

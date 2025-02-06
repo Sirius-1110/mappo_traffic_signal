@@ -2,7 +2,7 @@ from easydict import EasyDict
 from torch import nn
 
 sumo_mappo_default_config = dict(
-    exp_name='sumo_7roads_sota',
+    exp_name='sumo_7roads_sota_myself',
     env=dict(
         manager=dict(
             # Whether to use shared memory. Only effective if manager type is 'subprocess'

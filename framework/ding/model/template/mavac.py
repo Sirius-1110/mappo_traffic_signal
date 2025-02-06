@@ -435,6 +435,7 @@ class MAVAC(nn.Module):
             edges = torch.tensor(list(itertools.combinations(range(A), 2))).t().contiguous().to(agent_state.device)
 
             agent_emb = self._agent_encoder(agent_state)
+            clsnt_emb = self._agent_encoder(agent_state)
             cls_emb = self._cls_encoder(cls_state, edges)
             integrate_obs_emb = self._self_attn(agent_emb)
             integrate_cls_emb = self._cros_attn(cls_emb, agent_emb)

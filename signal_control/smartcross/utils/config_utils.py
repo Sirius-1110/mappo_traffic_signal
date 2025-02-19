@@ -9,6 +9,7 @@ from ding.utils import deep_merge_dicts
 
 def read_ding_config(cfg_path):
     suffix = cfg_path.split('.')[-1]
+    print(f"Reading config from python file: {cfg_path}", "\n" )
     if suffix == 'py':
         cfg_module = os.path.splitext(cfg_path)[0]
         cfg_module = cfg_module.replace('/', '.')

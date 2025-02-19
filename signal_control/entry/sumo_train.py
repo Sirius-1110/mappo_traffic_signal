@@ -1,28 +1,22 @@
 #!/usr/bin/env python3
 import os
-print(os.getcwd(), "\n")
-import sys
-
-sys.path.append(r"/home/cidi/mappo_traffic_signal/")
-
-
 import logging
 import argparse
 from functools import partial
-# 使用 partial 来固定某些参数，创建一个新的函数
+import sys
 from tensorboardX import SummaryWriter
 
 from ding.config import compile_config
 from ding.policy import create_policy, PolicyFactory
 from ding.envs import get_vec_env_setting, create_env_manager
-# framework\ding\envs\env\base_env.py framework\ding\envs\env_manager\base_env_manager.py
-# return env_fn, collector_env_cfg, evaluator_env_cfg
-# return ENV_MANAGER_REGISTRY.build(manager_type, env_fn=env_fn, cfg=manager_cfg)
 from ding.worker import BaseLearner, InteractionSerialEvaluator, create_serial_collector, create_buffer
 from ding.utils.default_helper import set_pkg_seed
 from ding.rl_utils import get_epsilon_greedy_fn
-from signal_control.smartcross.utils.config_utils import get_sumo_config
-from signal_control.smartcross.policy.default_policy import get_random_sample_func
+
+print("cwd ", os.getcwd())
+sys.path.append('smartcross/utils')
+from ..smartcross.utils.config_utils import get_sumo_config
+from ..smartcross.policy.default_policy import get_random_sample_func
 
 
 def main(args, seed=None):

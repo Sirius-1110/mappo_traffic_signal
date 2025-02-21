@@ -1,5 +1,11 @@
 #!/usr/bin/env python3
 import os
+print(os.getcwd(), "\n")
+import sys
+
+sys.path.append(r"/home/cidi/mappo_traffic_signal/")
+
+
 import logging
 import argparse
 from functools import partial
@@ -15,8 +21,8 @@ from ding.envs import get_vec_env_setting, create_env_manager
 from ding.worker import BaseLearner, InteractionSerialEvaluator, create_serial_collector, create_buffer
 from ding.utils.default_helper import set_pkg_seed
 from ding.rl_utils import get_epsilon_greedy_fn
-from smartcross.utils.config_utils import get_sumo_config
-from smartcross.policy.default_policy import get_random_sample_func
+from signal_control.smartcross.utils.config_utils import get_sumo_config
+from signal_control.smartcross.policy.default_policy import get_random_sample_func
 
 
 def main(args, seed=None):

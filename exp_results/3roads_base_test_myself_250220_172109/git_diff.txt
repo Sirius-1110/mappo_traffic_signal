@@ -1,0 +1,16 @@
+diff --git a/signal_control/entry/sumo_train b/signal_control/entry/sumo_train
+index 2555634..3f4bc1a 100644
+--- a/signal_control/entry/sumo_train
++++ b/signal_control/entry/sumo_train
+@@ -3,8 +3,9 @@ import os
+ print(os.getcwd(), "\n")
+ import sys
+ 
+-sys.path.append(r"/home/cidi/mappo_traffic_signal/")
+-
++sys.path.append(r"/home/cidi/Documents/MAPPO/mappo_traffic_signal/")
++sys.path.append(r"/home/cidi/Documents/MAPPO/mappo_traffic_signal/framework")
++sys.path.append(r"/home/cidi/Documents/MAPPO/mappo_traffic_signal/signal_control")
+ 
+ import logging
+ import argparse

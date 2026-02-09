@@ -1,9 +1,12 @@
 #!/usr/bin/env python3
 import os
-print(os.getcwd(), "\n")
 import sys
 
-sys.path.append(r"/home/cidi/mappo_traffic_signal/")
+_SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+_PROJECT_ROOT = os.path.abspath(os.path.join(_SCRIPT_DIR, '..', '..'))
+for _sub in [_PROJECT_ROOT, os.path.join(_PROJECT_ROOT, 'framework'), os.path.join(_PROJECT_ROOT, 'signal_control')]:
+    if _sub not in sys.path:
+        sys.path.insert(0, _sub)
 
 
 import logging
@@ -46,6 +49,7 @@ def main(args, seed=None):
     policy = create_policy(cfg.policy, enable_field=['learn', 'collect', 'eval'])
 
     tb_logger = SummaryWriter('./{}/tensorboard/'.format(cfg.exp_name))
+    # framework\ding\worker\learner\base_learner.py
     learner = BaseLearner(cfg.policy.learn.learner, policy.learn_mode, tb_logger, exp_name=cfg.exp_name)
     collector = create_serial_collector(
         cfg.policy.collect.collector,

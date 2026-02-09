@@ -58,7 +58,7 @@ sumo_mappo_default_config = dict(
                 collect_print_freq=10,
             )
         ),
-        eval=dict(evaluator=dict(eval_freq=1e100, )),
+        eval=dict(evaluator=dict(eval_freq=1000, )),
         other=dict()
     ),
 )

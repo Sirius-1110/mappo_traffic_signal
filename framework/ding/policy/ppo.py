@@ -113,7 +113,13 @@ class PPOPolicy(Policy):
                         torch.nn.init.zeros_(m.bias)
                 # do last policy layer scaling, this will make initial actions have (close to)
                 # 0 mean and std, and will help boost performances,
+                # Figure 24(P25): Analysis of choice Last policy layer scaling (C57): 95th percentile of perfor-
+                    # mance scores conditioned on choice (left) and
+                    #  distribution of choices in top 5% of configurations
+                    # (right)
                 # see https://arxiv.org/abs/2006.05990, Fig.24 for details
+                # What Matters In On-Policy Reinforcement Learning?
+                #     A Large-Scale Empirical Study
                 for m in self._model.actor.modules():
                     if isinstance(m, torch.nn.Linear):
                         torch.nn.init.zeros_(m.bias)
@@ -135,7 +141,6 @@ class PPOPolicy(Policy):
         self._clip_ratio = self._cfg.learn.clip_ratio
         self._adv_norm = self._cfg.learn.adv_norm
         self._value_norm = self._cfg.learn.value_norm
-        print("check", self._cfg.learn.grad_clip_value, self._cfg.learn.grad_clip_type)
         if self._value_norm:
             self._running_mean_std = RunningMeanStd(epsilon=1e-4, device=self._device)
         self._gamma = self._cfg.collect.discount_factor

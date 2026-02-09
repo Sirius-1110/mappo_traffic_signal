@@ -170,16 +170,16 @@ class CrosAttention(nn.Module):
         T, B, A, N = agent_state.shape
 
         # Cross-attention
-        query = self.query(integrate_cluster_emb)
-        key = self.key(agent_state)
-        value = self.value(agent_state)
+        query = self.query(agent_state)
+        key = self.key(integrate_cluster_emb)
+        value = self.value(integrate_cluster_emb)
         
-        attention_map = torch.matmul(query, key.transpose(-1, -2))  # T, B, 1, A
+        attention_map = torch.matmul(query, key.transpose(-1, -2))  # T, B, A, K
         attention_map /= math.sqrt(self._hidden_dim)
         attention_map = F.softmax(attention_map, dim=-1)
-        cross_attention_output = torch.matmul(attention_map, value)  # T, B, 1, hidden_dim
+        cross_attention_output = torch.matmul(attention_map, value)  # T, B, A, hidden_dim
         
-        return cross_attention_output  # T, B, 1, hidden_dim
+        return cross_attention_output  # T, B, A, hidden_dim
 
 @MODEL_REGISTRY.register('mavac')
 class MAVAC(nn.Module):
@@ -435,11 +435,11 @@ class MAVAC(nn.Module):
             edges = torch.tensor(list(itertools.combinations(range(A), 2))).t().contiguous().to(agent_state.device)
 
             agent_emb = self._agent_encoder(agent_state)
-            clsnt_emb = self._agent_encoder(agent_state)
             cls_emb = self._cls_encoder(cls_state, edges)
             integrate_obs_emb = self._self_attn(agent_emb)
-            integrate_cls_emb = self._cros_attn(cls_emb, agent_emb)
+            integrate_cls_emb = self._cros_attn(agent_emb, cls_emb)
             integrate_emb = torch.add(integrate_obs_emb, integrate_cls_emb)
+            x = self.critic_encoder(torch.concat([integrate_emb, global_state], dim=-1))
             x = self.critic_head(x)
             if single_step:
                 x['pred'] = x['pred'].squeeze(0)

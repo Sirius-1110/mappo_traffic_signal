@@ -12,11 +12,11 @@ from sumolib import checkBinary
 from ding.envs import BaseEnv, BaseEnvTimestep  # , BaseEnvInfo
 from ding.utils import ENV_REGISTRY
 from ding.torch_utils import to_ndarray, to_tensor
-from smartcross.envs.crossing import Crossing
-from smartcross.envs.obs import SumoObsRunner
-from smartcross.envs.action import SumoActionRunner
-from smartcross.envs.reward import SumoRewardRunner
-from smartcross.utils.config_utils import get_sumocfg_inputs
+from signal_control.smartcross.envs.crossing import Crossing
+from signal_control.smartcross.envs.obs import SumoObsRunner
+from signal_control.smartcross.envs.action import SumoActionRunner
+from signal_control.smartcross.envs.reward import SumoRewardRunner
+from signal_control.smartcross.utils.config_utils import get_sumocfg_inputs
 
 
 @ENV_REGISTRY.register('sumo_env')
@@ -160,11 +160,10 @@ class SumoEnv(BaseEnv):
         return BaseEnvTimestep(obs, reward, done, info)
 
     def seed(self, seed: int, dynamic_seed: bool = True) -> None:
-        seed = 0
-        dynamic_seed = 0
         self._seed = seed
         self._dynamic_seed = dynamic_seed
         np.random.seed(self._seed)
+        random.seed(self._seed)
 
     def close(self) -> None:
         r"""
@@ -184,10 +183,10 @@ class SumoEnv(BaseEnv):
         kmeans = KMeans(n_clusters=k, n_init=1).fit(coordinates)
         for i, cluster in enumerate(kmeans.labels_):
             neb[cluster][i] = agent_states[i]
-        #print("Cluster labels for each agent:", kmeans.labels_)
-        #print("roy check state", agent_states)
-        #print("roy check neb", neb)
-        #print("roy check neb shape", neb.shape, type(neb))     # (2, 6, 42)
+        # print("Cluster labels for each agent:", kmeans.labels_)
+        # print("roy check state", agent_states)
+        # print("roy check neb", neb)
+        # print("roy check neb shape", neb.shape, type(neb))     # (2, 6, 42)
         return neb
     
     def _update_metric(self):

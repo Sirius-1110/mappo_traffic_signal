@@ -170,17 +170,16 @@ class CrosAttention(nn.Module):
     def forward(self, agent_state, integrate_cluster_emb):
         T, B, A, N = agent_state.shape
 
-        # Cross-attention
-        query = self.query(integrate_cluster_emb)
-        key = self.key(agent_state)
-        value = self.value(agent_state)
-        
-        attention_map = torch.matmul(query, key.transpose(-1, -2))  # T, B, 1, A
+        query = self.query(agent_state)
+        key = self.key(integrate_cluster_emb)
+        value = self.value(integrate_cluster_emb)
+
+        attention_map = torch.matmul(query, key.transpose(-1, -2))  # T, B, A, K
         attention_map /= math.sqrt(self._hidden_dim)
         attention_map = F.softmax(attention_map, dim=-1)
-        cross_attention_output = torch.matmul(attention_map, value)  # T, B, 1, hidden_dim
-        
-        return cross_attention_output  # T, B, 1, hidden_dim
+        cross_attention_output = torch.matmul(attention_map, value)  # T, B, A, hidden_dim
+
+        return cross_attention_output  # T, B, A, hidden_dim
 
 @MODEL_REGISTRY.register('mavac_sota')
 class MAVACSota(nn.Module):
@@ -265,11 +264,26 @@ class MAVACSota(nn.Module):
         # We directly connect the Head after a Liner layer instead of using the 3-layer FCEncoder.
         # In SMAC task it can obviously improve the performance.
         # Users can change the model according to their own needs.
+
+        # 1.Actor网络：
+        # 包含一个编码器 (self.actor_encoder) 和一个头 (self.actor_head)。
+        # 编码器在这里被设置为 nn.Identity()，即不进行任何变换。
+        # 头部分根据动作空间类型（离散或连续）选择不同的实现方式。
+        # self.actor_head
+        # 作用：生成动作（Action）或动作概率分布：
+        # - 在离散动作空间中，self.actor_head 输出一个 logit 张量，表示每个可能动作的概率分布。
+        # - 在连续动作空间中，self.actor_head 输出动作的参数（如均值和标准差），用于采样具体动作
+        # 2.Critic网络：
+        # 同样包含一个编码器 (self.critic_encoder) 和一个头 (self.critic_head)。
+        # 编码器同样被设置为 nn.Identity()。
+        # 头部分是一个顺序层，包括一个线性层和一个回归头。
         self.actor_encoder = nn.Identity()
         self.critic_encoder = nn.Identity()
         # Head Type
         if self.sota:
             global_obs_shape = global_obs_shape + 4
+            # 具体增加4的原因取决于模型的具体设计和应用场景。
+            # 通常，这可能是为了添加额外的特征或信息到全局观测中，以提高模型的表现。
         self.critic_head = nn.Sequential(
             nn.Linear(global_obs_shape, critic_head_hidden_size), activation,
             RegressionHead(
@@ -444,8 +458,9 @@ class MAVACSota(nn.Module):
             agent_emb = self._agent_encoder(agent_state)
             cls_emb = self._cls_encoder(cls_state, edges)
             integrate_obs_emb = self._self_attn(agent_emb)
-            integrate_cls_emb = self._cros_attn(cls_emb, agent_emb)
+            integrate_cls_emb = self._cros_attn(agent_emb, cls_emb)
             integrate_emb = torch.add(integrate_obs_emb, integrate_cls_emb)
+            # critic_head包含一个MLP
             x = self.critic_encoder(torch.concat([integrate_emb, global_state], dim = -1))
             x = self.critic_head(x)
             if single_step:

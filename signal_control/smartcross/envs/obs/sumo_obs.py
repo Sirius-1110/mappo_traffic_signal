@@ -6,7 +6,7 @@ from ding.envs import BaseEnv
 from ding.envs.common.env_element import EnvElementInfo
 from ding.envs.common import EnvElement
 
-from smartcross.utils.env_utils import squeeze_obs
+from signal_control.smartcross.utils.env_utils import squeeze_obs
 
 ALL_OBS_TPYE = set(['phase', 'lane_pos_vec', 'traffic_volumn', 'queue_len'])
 

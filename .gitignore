@@ -1,0 +1,17 @@
+﻿# 训练输出
+exp_results/
+debug_*/
+quicktest_*/
+*.pth
+*.tar
+
+# 临时文件
+__pycache__/
+*.pyc
+*.log
+.DS_Store
+
+# 数据文件
+*.zip
+*.csv
+data/
